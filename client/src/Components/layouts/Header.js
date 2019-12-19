@@ -7,6 +7,7 @@ const Header = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 1;
   background-color: #fff;
   border-bottom: 1px solid #e8e8e8;
 `;

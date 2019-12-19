@@ -12,17 +12,19 @@ const ContentBox = styled.div`
   padding-top: 24px;
   padding-bottom: 24px;
 `;
-const GridBox = styled.div`
+const Mansory = styled.div`
   columns: 4;
+  column-gap: 20px;
 `;
-const GridItem = styled.div`
-  width: 100%;
-  margin: 0 0 20px;
-  padding: 10px;
-  overflow: hidden;
+const MansoryItem = styled.figure`
+  padding-bottom: 16px;
+  padding-left: 8px;
+  padding-right: 8px;
   break-inside: avoid;
+  overflow: hidden;
   img {
     max-width: 100%;
+    height: auto;
   }
 `;
 const HomePresenter = ({ time }) => {
@@ -31,20 +33,26 @@ const HomePresenter = ({ time }) => {
       <Container>
         <Wrapper>
           <ContentBox>
-            <GridBox>
-              <GridItem>
+            <Mansory className="grid_box">
+              <MansoryItem>
                 <img src={require("../../assets/img/test.png")} />
-              </GridItem>
-              <GridItem>
+              </MansoryItem>
+              <MansoryItem>
                 <img src={require("../../assets/img/test.png")} />
-              </GridItem>
-              <GridItem>
+              </MansoryItem>
+              <MansoryItem>
                 <img src={require("../../assets/img/test.png")} />
-              </GridItem>
-              <GridItem>
+              </MansoryItem>
+              <MansoryItem>
                 <img src={require("../../assets/img/test.png")} />
-              </GridItem>
-            </GridBox>
+              </MansoryItem>
+              <MansoryItem>
+                <img src={require("../../assets/img/test.png")} />
+              </MansoryItem>
+              <MansoryItem>
+                <img src={require("../../assets/img/test.png")} />
+              </MansoryItem>
+            </Mansory>
           </ContentBox>
         </Wrapper>
       </Container>
