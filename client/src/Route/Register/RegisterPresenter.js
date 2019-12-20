@@ -1,13 +1,20 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Link, Redirect } from "react-router-dom";
+import Alert from "../../Components/layouts/Alert";
 
-const Main = styled.main``;
+const Main = styled.main`
+  height: calc(100vh - 164px);
+`;
 const Container = styled.div`
+  height: 100%;
   width: 440px;
   margin: auto;
+  display: flex;
+  align-items: center;
 `;
 const Wrapper = styled.section`
+  width: 100%;
   padding: 100px 0;
 `;
 const Hbox = styled.div`
@@ -90,13 +97,22 @@ const Submit = styled.input`
   left: 0;
   margin-bottom: 10px;
 `;
-const RegisterPresenter = ({ handleSubmit, handleChange, ...formData }) => {
+const RegisterPresenter = ({
+  isAuthenticated,
+  handleSubmit,
+  handleChange,
+  ...formData
+}) => {
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
   return (
     <Main>
       <Container>
         <Wrapper>
           <LoginBox>
             <Hbox>
+              <Alert />
               <Hlink to="/">NOLLA</Hlink>
             </Hbox>
             <Form className="simple-login-container">

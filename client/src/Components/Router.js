@@ -10,6 +10,7 @@ import Footer from "./layouts/Footer";
 import Home from "../Route/Home";
 import Login from "../Route/Login";
 import Register from "../Route/Register";
+import Profile from "../Route/Profile";
 
 export default () => {
   return (
@@ -19,6 +20,7 @@ export default () => {
         <Route path="/" exact component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/profile" component={Profile} />
         <Redirect from="/*" to="/" />
       </Switch>
       <Footer />

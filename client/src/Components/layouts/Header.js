@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
+import { logout } from "../../actions/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = styled.header`
   position: fixed;
@@ -155,6 +157,10 @@ export default withRouter(({ location: { pathname } }) => {
     });
   };
 
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const profile = useSelector(state => state.profile);
+
   return (
     <Header>
       <Container>
@@ -200,24 +206,52 @@ export default withRouter(({ location: { pathname } }) => {
                 </Hover>
               </Home>
             </HomeBox>
-            <LoginBox>
-              <Login to="/login">
-                <Hover>
-                  <div>
-                    <Span current={pathname === "/login"}>로그인</Span>
-                  </div>
-                </Hover>
-              </Login>
-            </LoginBox>
-            <JoinBox>
-              <Join to="/register">
-                <Hover>
-                  <div>
-                    <Span current={pathname === "/register"}>회원가입</Span>
-                  </div>
-                </Hover>
-              </Join>
-            </JoinBox>
+            {auth.loading ? null : (
+              <>
+                <LoginBox>
+                  {auth.isAuthenticated ? (
+                    <Login to="/" onClick={() => dispatch(logout())}>
+                      <Hover>
+                        <div>
+                          <Span current={pathname === "/logout"}>로그아웃</Span>
+                        </div>
+                      </Hover>
+                    </Login>
+                  ) : (
+                    <Login to="/login">
+                      <Hover>
+                        <div>
+                          <Span current={pathname === "/login"}>로그인</Span>
+                        </div>
+                      </Hover>
+                    </Login>
+                  )}
+                </LoginBox>
+                {auth.isAuthenticated ? (
+                  <JoinBox>
+                    <Join to="/profile">
+                      <Hover>
+                        <div>
+                          <Span current={pathname === "/profile"}>프로필</Span>
+                        </div>
+                      </Hover>
+                    </Join>
+                  </JoinBox>
+                ) : (
+                  <JoinBox>
+                    <Join to="/register">
+                      <Hover>
+                        <div>
+                          <Span current={pathname === "/register"}>
+                            회원가입
+                          </Span>
+                        </div>
+                      </Hover>
+                    </Join>
+                  </JoinBox>
+                )}
+              </>
+            )}
             <ChatBox></ChatBox>
           </ButtonBox>
         </ContentBox>
