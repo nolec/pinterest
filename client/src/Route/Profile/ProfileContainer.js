@@ -8,10 +8,6 @@ const ProfileContainer = () => {
   const auth = useSelector(state => state.auth);
   const profile = useSelector(state => state.profile);
 
-  useEffect(() => {
-    dispatch(loadProfile());
-  }, []);
-
   const [top, setTop] = useState("-50px");
   const changeTop = () => {
     if (window.scrollY > 30) {
@@ -24,6 +20,10 @@ const ProfileContainer = () => {
     window.addEventListener("scroll", changeTop);
     return top;
   };
+  useEffect(() => {
+    dispatch(loadProfile());
+    return () => window.removeEventListener("scroll", changeTop);
+  }, [handleScroll]);
   return (
     <ProfilePresenter
       handleScroll={handleScroll}

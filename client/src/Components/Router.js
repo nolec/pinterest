@@ -11,6 +11,7 @@ import Home from "../Route/Home";
 import Login from "../Route/Login";
 import Register from "../Route/Register";
 import Profile from "../Route/Profile";
+import Builder from "../Route/Builder";
 
 export default () => {
   return (
@@ -21,6 +22,7 @@ export default () => {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
+        <Route path="/builder" component={Builder} />
         <Redirect from="/*" to="/" />
       </Switch>
       <Footer />

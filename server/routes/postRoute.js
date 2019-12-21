@@ -5,14 +5,54 @@ import auth from "../middlewares/auth";
 import User from "../models/User";
 import Post from "../models/Post";
 
+import multer from "multer";
+import path from "path";
+
 const postRoute = express.Router();
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+  fileFilter: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    if (ext !== ".mp4") {
+      return cb(res.status(400).end("only jpg, png, mp4 is allowed"), false);
+    }
+    cb(null, true);
+  }
+});
+
+const upload = multer({ storage: storage }).single("fileUrl");
+
+postRoute.post("/uploadfiles", (req, res) => {
+  upload(req, res, err => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+    return res.json({
+      success: true,
+      filePath: res.req.file.path,
+      fileName: res.req.file.filename
+    });
+  });
+});
 
 postRoute.post(
   "/",
   [
     auth,
     [
+      check("title", "제목이 필요합니다.")
+        .not()
+        .isEmpty(),
       check("text", "내용이 필요합니다.")
+        .not()
+        .isEmpty(),
+      check("fileUrl", "파일을 선택해 주세요.")
         .not()
         .isEmpty()
     ]
@@ -24,6 +64,7 @@ postRoute.post(
       const user = await User.findById(req.user).select("-password");
 
       const newPost = await new Post({
+        title: req.body.title,
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
@@ -38,6 +79,15 @@ postRoute.post(
     }
   }
 );
+postRoute.get("/all", async (req, res) => {
+  try {
+    const posts = await Post.find().sort({ date: -1 });
+    res.json(posts);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error - GET_POSTS");
+  }
+});
 postRoute.get("/", auth, async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 });

@@ -4,7 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import Alert from "../../Components/layouts/Alert";
 
 const Main = styled.main`
-  height: calc(100vh - 164px);
+  height: 100vh;
 `;
 const Container = styled.div`
   height: 100%;
@@ -12,10 +12,11 @@ const Container = styled.div`
   margin: auto;
   display: flex;
   align-items: center;
+  margin-top: 85px;
+  margin-bottom: 20px;
 `;
 const Wrapper = styled.section`
   width: 100%;
-  padding: 100px 0;
 `;
 const Hbox = styled.div`
   width: 100%;

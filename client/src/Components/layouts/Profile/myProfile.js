@@ -78,6 +78,7 @@ const Avatar = styled.div`
   display: flex;
   margin: 0 0 0 auto;
   img {
+    border-radius: 1000px;
     width: 100%;
   }
 `;
