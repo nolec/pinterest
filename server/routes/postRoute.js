@@ -7,7 +7,7 @@ import Post from "../models/Post";
 
 import multer from "multer";
 import path from "path";
-
+import ffmpeg from "fluent-ffmpeg";
 const postRoute = express.Router();
 
 var storage = multer.diskStorage({
@@ -40,7 +40,42 @@ postRoute.post("/uploadfiles", (req, res) => {
     });
   });
 });
+postRoute.post("/thumbnail", (req, res) => {
+  let thumbsFilePath = "";
+  let fileDuration = 1;
 
+  ffmpeg.ffprobe(req.body.filePath, function(err, metadata) {
+    if (metadata.format.duration === N / A) {
+      console.log("hello");
+    }
+    console.log(metadata);
+    console.dir(metadata);
+    console.log(metadata.format.duration);
+
+    fileDuration = metadata.format.duration;
+  });
+  ffmpeg(req.body.filePath)
+    .on("filenames", function(filenames) {
+      console.log(`Will generate ${filenames.join(", ")}`);
+      thumbsFilePath = `uploads/thumbnails/${filenames[0]}`;
+    })
+    .on("end", function() {
+      console.log("Screenshots taken");
+      return res.json({
+        success: true,
+        thumbsFilePath: thumbsFilePath,
+        fileDuration: fileDuration
+      });
+    })
+    .screenshots({
+      // Will take screens at 20%, 40%, 60% and 80% of the video
+      count: 3,
+      folder: "uploads/thumbnails",
+      size: "320x240",
+      // %b input basename ( filename w/o extension )
+      filename: "thumbnail-%b.png"
+    });
+});
 postRoute.post(
   "/",
   [
@@ -49,10 +84,10 @@ postRoute.post(
       check("title", "제목이 필요합니다.")
         .not()
         .isEmpty(),
-      check("text", "내용이 필요합니다.")
+      check("description", "내용이 필요합니다.")
         .not()
         .isEmpty(),
-      check("fileUrl", "파일을 선택해 주세요.")
+      check("filePath", "파일을 선택해 주세요.")
         .not()
         .isEmpty()
     ]
@@ -64,11 +99,14 @@ postRoute.post(
       const user = await User.findById(req.user).select("-password");
 
       const newPost = await new Post({
+        user: req.user,
         title: req.body.title,
-        text: req.body.text,
+        filePath: req.body.filePath,
+        duration: req.body.duration,
+        thumbnail: req.body.thumbnail,
+        description: req.body.description,
         name: user.name,
-        avatar: user.avatar,
-        user: req.user
+        avatar: user.avatar
       });
       const post = await newPost.save();
 

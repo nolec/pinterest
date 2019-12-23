@@ -15,19 +15,61 @@ const Container = styled.div`
 `;
 const Wrapper = styled.section`
   height: 100%;
+  margin-top: 50px;
 `;
 const BuilderBox = styled.div`
-  width: 300px;
-  padding-top: 20px;
+  max-width: 800px;
+  padding: 20px;
   border-radius: 16px;
   background-color: #fff;
   margin: auto;
+  display: flex;
 `;
-const Left = styled.div``;
-const ButtonBox = styled.div``;
-const Right = styled.div``;
-const Group = styled.div``;
+const Left = styled.div`
+  flex-basis: 50%;
+  padding: 10px;
+`;
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  button {
+    width: 80%;
+    height: 30px;
+    border: 1px solid;
+    color: #999999;
+    background-color: #fff;
+    border-radius: 10px;
+  }
+`;
+const Group = styled.div`
+  width: 100%;
+  input[name="title"] {
+    width: 100%;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 0 10px;
+  }
+  textarea {
+    width: 100%;
+    height: 70px;
+    border-radius: 10px;
+    border: 1px solid;
+    padding: 10px 10px;
+  }
+`;
+const Right = styled.div`
+  flex-basis: 50%;
+  padding: 10px;
+  ${Group} {
+    :not(:first-child) {
+      margin-top: 10px;
+    }
+  }
+`;
 const BuilderPresenter = ({
+  Thumbnail,
   onDrop,
   handleChangeTitle,
   handleChangeDecsription,
@@ -44,17 +86,26 @@ const BuilderPresenter = ({
                   {({ getRootProps, getInputProps }) => (
                     <div
                       style={{
-                        width: "300px",
+                        width: "100%",
                         height: "240px",
                         border: "1px solid lightgray",
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
+                        borderRadius: "10px"
                       }}
                       {...getRootProps()}
                     >
                       {console.log(getRootProps(), getInputProps())}
                       <input {...getInputProps()} />
+                      {Thumbnail !== "" && (
+                        <div>
+                          <img
+                            src={`http://localhost:5000/${Thumbnail}`}
+                            alt="haha"
+                          />
+                        </div>
+                      )}
                     </div>
                   )}
                 </Dropzone>

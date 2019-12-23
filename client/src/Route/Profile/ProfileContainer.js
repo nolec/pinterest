@@ -11,19 +11,19 @@ const ProfileContainer = () => {
   const [top, setTop] = useState("-50px");
   const changeTop = () => {
     if (window.scrollY > 30) {
-      setTop("0px");
-    } else {
-      setTop("-50px");
+      return setTop("0px");
     }
+    setTop("-50px");
   };
   const handleScroll = () => {
-    window.addEventListener("scroll", changeTop);
+    changeTop();
     return top;
   };
   useEffect(() => {
     dispatch(loadProfile());
-    return () => window.removeEventListener("scroll", changeTop);
-  }, [handleScroll]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <ProfilePresenter
       handleScroll={handleScroll}

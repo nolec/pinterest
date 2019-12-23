@@ -9,7 +9,16 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  text: {
+  filePath: {
+    type: String
+  },
+  duration: {
+    type: String
+  },
+  thumbnail: {
+    type: String
+  },
+  description: {
     type: String,
     required: true
   },
@@ -18,10 +27,6 @@ const PostSchema = new mongoose.Schema({
   },
   avatar: {
     type: String
-  },
-  fileUrl: {
-    type: String,
-    required: true
   },
   likes: [
     {
