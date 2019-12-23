@@ -68,13 +68,7 @@ const Right = styled.div`
     }
   }
 `;
-const BuilderPresenter = ({
-  Thumbnail,
-  onDrop,
-  handleChangeTitle,
-  handleChangeDecsription,
-  handleSubmit
-}) => {
+const BuilderPresenter = ({ thumb, onDrop, handleChange, handleSubmit }) => {
   return (
     <Main>
       <Container>
@@ -98,12 +92,16 @@ const BuilderPresenter = ({
                     >
                       {console.log(getRootProps(), getInputProps())}
                       <input {...getInputProps()} />
-                      {Thumbnail !== "" && (
+                      {thumb !== null ? (
                         <div>
                           <img
-                            src={`http://localhost:5000/${Thumbnail}`}
+                            src={`http://localhost:5000/${thumb.thumbsFilePath}`}
                             alt="haha"
                           />
+                        </div>
+                      ) : (
+                        <div>
+                          <button type="button">+</button>
                         </div>
                       )}
                     </div>
@@ -122,7 +120,7 @@ const BuilderPresenter = ({
                   type="text"
                   name="title"
                   placeholder="제목 추가"
-                  onChange={handleChangeTitle}
+                  onChange={handleChange}
                 />
               </Group>
               <Group></Group>
@@ -131,7 +129,7 @@ const BuilderPresenter = ({
                   placeholder="사람들에게 회원님의 포스트에 대해 설명해 보세요"
                   rows="1"
                   name="description"
-                  onChange={handleChangeDecsription}
+                  onChange={handleChange}
                 />
               </Group>
             </Right>

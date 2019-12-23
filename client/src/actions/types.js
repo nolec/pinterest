@@ -17,3 +17,5 @@ export const PROFILE_LOADED = "PROFILE_LOADED";
 export const POST_SUCCESS = "POST_SUCCESS";
 export const POST_FAIL = "POST_FAIL";
 export const GET_POSTS = "GET_POSTS";
+export const UPLOAD_SUCCESS = "UPLOAD_SUCCES";
+export const SHOWING_THUMBNAIL = "SHOWING_THUMBNAIL";

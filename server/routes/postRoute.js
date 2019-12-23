@@ -15,13 +15,15 @@ var storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
+    console.log(file);
     cb(null, `${Date.now()}_${file.originalname}`);
   },
   fileFilter: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    // if (ext !== ".mp4") {
-    //   return cb(res.status(400).end("only jpg, png, mp4 is allowed"), false);
-    // }
+    const ext = path.extname(file.originalname).toLowerCase();
+    console.log(ext);
+    if (file.mimetype === "video/mp4") {
+      return cb(res.status(400).send("사진만 들어갈게요~"), false);
+    }
     cb(null, true);
   }
 });
@@ -30,6 +32,7 @@ const upload = multer({ storage: storage }).single("file");
 
 postRoute.post("/uploadfiles", (req, res) => {
   upload(req, res, err => {
+    console.log(res.file);
     if (err) {
       return res.json({ success: false, err });
     }
@@ -45,12 +48,8 @@ postRoute.post("/thumbnail", (req, res) => {
   let fileDuration = 1;
 
   ffmpeg.ffprobe(req.body.filePath, function(err, metadata) {
-    if (metadata.format.duration === N / A) {
-      console.log("hello");
-    }
-    console.log(metadata);
     console.dir(metadata);
-    console.log(metadata.format.duration);
+    console.log(metadata.format);
 
     fileDuration = metadata.format.duration;
   });
@@ -97,7 +96,7 @@ postRoute.post(
     if (!errors.isEmpty()) return res.status(400).json({ msg: errors.array() });
     try {
       const user = await User.findById(req.user).select("-password");
-
+      console.log(req);
       const newPost = await new Post({
         user: req.user,
         title: req.body.title,
