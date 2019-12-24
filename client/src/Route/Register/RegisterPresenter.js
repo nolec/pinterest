@@ -4,7 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import Alert from "../../Components/layouts/Alert";
 
 const Main = styled.main`
-  height: 100vh;
+  padding-top: 100px;
 `;
 const Container = styled.div`
   height: 100%;
@@ -12,8 +12,6 @@ const Container = styled.div`
   margin: auto;
   display: flex;
   align-items: center;
-  margin-top: 85px;
-  margin-bottom: 20px;
 `;
 const Wrapper = styled.section`
   width: 100%;

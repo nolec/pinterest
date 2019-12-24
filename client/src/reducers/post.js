@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case GET_POSTS:
-      return { ...state, posts: payload, loading: false };
+      return { ...state, posts: payload, loading: false, thumbnails: null };
     case UPLOAD_SUCCESS:
       return { ...state, loading: false, files: payload };
     case SHOWING_THUMBNAIL:

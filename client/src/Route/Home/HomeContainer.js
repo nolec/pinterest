@@ -3,7 +3,7 @@ import HomePresenter from "./HomePresenter";
 import { useSelector, useDispatch } from "react-redux";
 import { loadPost } from "../../actions/post";
 
-const HomeConatiner = () => {
+const HomeConatiner = ({ location }) => {
   // const getTime = () => {
   //   const date = new Date();
   //   const minutes = date.getMinutes();
@@ -23,8 +23,11 @@ const HomeConatiner = () => {
   // }, []);
   //-----------------------------시간
   const dispatch = useDispatch();
-  dispatch(loadPost());
-  return <HomePresenter></HomePresenter>;
+  const posts = useSelector(state => state.post.posts);
+  useEffect(() => {
+    dispatch(loadPost());
+  }, []);
+  return <HomePresenter location={location} posts={posts}></HomePresenter>;
 };
 
 export default HomeConatiner;

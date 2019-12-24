@@ -6,6 +6,7 @@ import {
   SHOWING_THUMBNAIL
 } from "./types";
 import axios from "axios";
+import { setAlert } from "./alert";
 
 export const loadPost = () => async dispatch => {
   try {
@@ -23,22 +24,14 @@ export const loadPost = () => async dispatch => {
 };
 export const createPost = (formData, history) => async dispatch => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-    const res = await axios.post("/api/post", config, formData);
+    const res = await axios.post("/api/post", formData);
     dispatch({
       type: POST_SUCCESS,
       payload: res.data
     });
     history.push("/");
   } catch (error) {
-    dispatch({
-      type: POST_FAIL,
-      payload: { msg: error.response.statusText, status: error.response.status }
-    });
+    console.log(error);
   }
 };
 export const uploadFiles = files => async dispatch => {

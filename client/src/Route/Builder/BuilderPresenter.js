@@ -68,7 +68,13 @@ const Right = styled.div`
     }
   }
 `;
-const BuilderPresenter = ({ thumb, onDrop, handleChange, handleSubmit }) => {
+const BuilderPresenter = ({
+  user,
+  thumb,
+  onDrop,
+  handleChange,
+  handleSubmit
+}) => {
   return (
     <Main>
       <Container>
@@ -86,22 +92,34 @@ const BuilderPresenter = ({ thumb, onDrop, handleChange, handleSubmit }) => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        borderRadius: "10px"
+                        borderRadius: "10px",
+                        overflow: "hidden"
                       }}
                       {...getRootProps()}
                     >
                       {console.log(getRootProps(), getInputProps())}
                       <input {...getInputProps()} />
                       {thumb !== null ? (
-                        <div>
+                        <div style={{ overflow: "hidden", width: "100%" }}>
                           <img
+                            style={{ width: "100%" }}
                             src={`http://localhost:5000/${thumb.thumbsFilePath}`}
                             alt="haha"
                           />
                         </div>
                       ) : (
                         <div>
-                          <button type="button">+</button>
+                          <button
+                            type="button"
+                            style={{
+                              all: "unset",
+                              fontSize: "100px",
+                              display: "flex",
+                              alignItems: "center"
+                            }}
+                          >
+                            +
+                          </button>
                         </div>
                       )}
                     </div>
