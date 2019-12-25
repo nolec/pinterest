@@ -4,7 +4,8 @@ import config from "./config/dev";
 mongoose.connect(config.mongoURL, {
   useNewUrlParser: true,
   useFindAndModify: false,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useUnifiedTopology: true
 });
 
 const db = mongoose.connection;

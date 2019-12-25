@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Dropzone from "react-dropzone";
-const Main = styled.main`
-  height: 100vh;
-`;
+import { Redirect } from "react-router-dom";
+const Main = styled.main``;
 
 const Container = styled.div`
   height: 100%;
@@ -77,83 +76,91 @@ const BuilderPresenter = ({
 }) => {
   return (
     <Main>
-      <Container>
-        <Wrapper>
-          <BuilderBox>
-            <Left>
-              <Group>
-                <Dropzone onDrop={onDrop} multiple={false} maxSize={800000000}>
-                  {({ getRootProps, getInputProps }) => (
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "240px",
-                        border: "1px solid lightgray",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: "10px",
-                        overflow: "hidden"
-                      }}
-                      {...getRootProps()}
-                    >
-                      {console.log(getRootProps(), getInputProps())}
-                      <input {...getInputProps()} />
-                      {thumb !== null ? (
-                        <div style={{ overflow: "hidden", width: "100%" }}>
-                          <img
-                            style={{ width: "100%" }}
-                            src={`http://localhost:5000/${thumb.thumbsFilePath}`}
-                            alt="haha"
-                          />
-                        </div>
-                      ) : (
-                        <div>
-                          <button
-                            type="button"
-                            style={{
-                              all: "unset",
-                              fontSize: "100px",
-                              display: "flex",
-                              alignItems: "center"
-                            }}
-                          >
-                            +
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </Dropzone>
-              </Group>
-              <ButtonBox>
-                <button type="button" onClick={handleSubmit}>
-                  사이트에 저장
-                </button>
-              </ButtonBox>
-            </Left>
-            <Right>
-              <Group>
-                <input
-                  type="text"
-                  name="title"
-                  placeholder="제목 추가"
-                  onChange={handleChange}
-                />
-              </Group>
-              <Group></Group>
-              <Group>
-                <textarea
-                  placeholder="사람들에게 회원님의 포스트에 대해 설명해 보세요"
-                  rows="1"
-                  name="description"
-                  onChange={handleChange}
-                />
-              </Group>
-            </Right>
-          </BuilderBox>
-        </Wrapper>
-      </Container>
+      {user && user.isAuthenticated ? (
+        <Container>
+          <Wrapper>
+            <BuilderBox>
+              <Left>
+                <Group>
+                  <Dropzone
+                    onDrop={onDrop}
+                    multiple={false}
+                    maxSize={800000000}
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "240px",
+                          border: "1px solid lightgray",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: "10px",
+                          overflow: "hidden"
+                        }}
+                        {...getRootProps()}
+                      >
+                        {console.log(getRootProps(), getInputProps())}
+                        <input {...getInputProps()} />
+                        {thumb !== null ? (
+                          <div style={{ overflow: "hidden", width: "100%" }}>
+                            <img
+                              style={{ width: "100%" }}
+                              src={`http://localhost:5000/${thumb.thumbsFilePath}`}
+                              alt="haha"
+                            />
+                          </div>
+                        ) : (
+                          <div>
+                            <button
+                              type="button"
+                              style={{
+                                all: "unset",
+                                fontSize: "100px",
+                                display: "flex",
+                                alignItems: "center"
+                              }}
+                            >
+                              +
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </Dropzone>
+                </Group>
+                <ButtonBox>
+                  <button type="button" onClick={handleSubmit}>
+                    사이트에 저장
+                  </button>
+                </ButtonBox>
+              </Left>
+              <Right>
+                <Group>
+                  <input
+                    type="text"
+                    name="title"
+                    placeholder="제목 추가"
+                    onChange={handleChange}
+                  />
+                </Group>
+                <Group></Group>
+                <Group>
+                  <textarea
+                    placeholder="사람들에게 회원님의 포스트에 대해 설명해 보세요"
+                    rows="1"
+                    name="description"
+                    onChange={handleChange}
+                  />
+                </Group>
+              </Right>
+            </BuilderBox>
+          </Wrapper>
+        </Container>
+      ) : (
+        <Redirect to="/" />
+      )}
     </Main>
   );
 };

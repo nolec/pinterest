@@ -22,12 +22,10 @@ const HomeConatiner = ({ location }) => {
   //   }, 1000);
   // }, []);
   //-----------------------------시간
-  const dispatch = useDispatch();
-  const posts = useSelector(state => state.post.posts);
-  useEffect(() => {
-    dispatch(loadPost());
-  }, []);
-  return <HomePresenter location={location} posts={posts}></HomePresenter>;
+
+  const auth = useSelector(state => state.auth);
+
+  return <HomePresenter location={location} auth={auth}></HomePresenter>;
 };
 
 export default HomeConatiner;

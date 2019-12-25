@@ -12,6 +12,7 @@ import Login from "../Route/Login";
 import Register from "../Route/Register";
 import Profile from "../Route/Profile";
 import Builder from "../Route/Builder";
+import Detail from "../Route/Detail";
 
 export default () => {
   return (
@@ -23,6 +24,7 @@ export default () => {
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
         <Route path="/builder" component={Builder} />
+        <Route path="/post/:id" exact component={Detail} />
         <Redirect from="/*" to="/" />
       </Switch>
       <Footer />
