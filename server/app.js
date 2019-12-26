@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/users", userRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/post", postRoute);
-app.use("/api/video", videoRoute);
+// app.use("/api/video", videoRoute);
 console.log(__dirname);
 app.use("/uploads", express.static("uploads"));
 // app.use("/nolla", express.static(path.resolve(__dirname, "../client/build")));
