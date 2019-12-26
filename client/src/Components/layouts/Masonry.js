@@ -29,7 +29,7 @@ const Div = styled.div`
     border-radius: 5px;
   }
   .grid-item {
-    width: 20%;
+    width: 25%;
     padding: 0 5px;
     margin-bottom: 10px;
   }
@@ -63,7 +63,7 @@ const Masonry = () => {
           post.posts.map(post => (
             <div key={post._id} className="grid-item">
               <Tlink to={`/post/${post._id}`}>
-                <img src={`http://localhost:5000/${post.thumbnail}`} />
+                <img src={`http://localhost:5000/${post.filePath}`} />
                 <span>{post.title}</span>
               </Tlink>
             </div>

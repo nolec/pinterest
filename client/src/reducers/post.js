@@ -3,7 +3,8 @@ import {
   POST_FAIL,
   GET_POSTS,
   UPLOAD_SUCCESS,
-  SHOWING_THUMBNAIL
+  SHOWING_THUMBNAIL,
+  DETAIL_POST
 } from "../actions/types";
 
 const initialState = {
@@ -25,6 +26,7 @@ export default (state = initialState, action) => {
     case SHOWING_THUMBNAIL:
       return { ...state, loading: false, thumbnails: payload };
     case POST_SUCCESS:
+    case DETAIL_POST:
       return { ...state, post: payload, loading: false };
     case POST_FAIL:
       return { ...state, error: payload, loading: false };

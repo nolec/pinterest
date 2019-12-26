@@ -3,7 +3,8 @@ import {
   POST_FAIL,
   GET_POSTS,
   UPLOAD_SUCCESS,
-  SHOWING_THUMBNAIL
+  SHOWING_THUMBNAIL,
+  DETAIL_POST
 } from "./types";
 import axios from "axios";
 import { setAlert } from "./alert";
@@ -61,8 +62,9 @@ export const uploadFiles = files => async dispatch => {
     const res2 = await axios.post("/api/post/thumbnail", variable);
     variable = {
       fileDuration: res2.data.fileDuration,
-      thumbsFilePath: res.data.thumbsFilePath
+      thumbsFilePath: res2.data.thumbsFilePath
     };
+    console.log(res2);
     dispatch({
       type: SHOWING_THUMBNAIL,
       payload: res2.data
@@ -70,5 +72,21 @@ export const uploadFiles = files => async dispatch => {
   } catch (error) {
     const errors = error.response.data.msg;
     console.log(errors);
+  }
+};
+export const detailPost = (id, history) => async dispatch => {
+  try {
+    const res = await axios.get(`/api/post/${id}`);
+    console.log(res);
+    dispatch({
+      type: DETAIL_POST,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_FAIL,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+    history.push("/");
   }
 };

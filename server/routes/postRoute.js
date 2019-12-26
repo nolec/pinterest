@@ -45,7 +45,7 @@ postRoute.post("/uploadfiles", (req, res) => {
 });
 postRoute.post("/thumbnail", (req, res) => {
   let thumbsFilePath = "";
-  let fileDuration = 1;
+  let fileDuration = "";
 
   ffmpeg.ffprobe(req.body.filePath, function(err, metadata) {
     console.dir(metadata);
@@ -133,7 +133,7 @@ postRoute.get("/", auth, async (req, res) => {
     res.status(500).send("Server Error - GET_POSTS");
   }
 });
-postRoute.get("/:id", auth, async (req, res) => {
+postRoute.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) {

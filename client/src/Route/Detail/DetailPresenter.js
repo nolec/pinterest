@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import DetailBox from "../../Components/layouts/PostDetail/DetailBox";
 
 const Main = styled.main`
   height: 100%;
@@ -10,11 +11,13 @@ const Container = styled.div`
   margin: auto;
 `;
 const Wrapper = styled.section``;
-const DetailPresenter = () => {
+const DetailPresenter = ({ post }) => {
   return (
     <Main>
       <Container>
-        <Wrapper>Detail</Wrapper>
+        <Wrapper>
+          <DetailBox children={post}></DetailBox>
+        </Wrapper>
       </Container>
     </Main>
   );

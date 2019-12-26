@@ -148,6 +148,7 @@ const BuilderPresenter = ({
                 <Group></Group>
                 <Group>
                   <textarea
+                    style={{ resize: "none" }}
                     placeholder="사람들에게 회원님의 포스트에 대해 설명해 보세요"
                     rows="1"
                     name="description"
