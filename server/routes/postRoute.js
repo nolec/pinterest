@@ -15,26 +15,30 @@ var storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
-    console.log(file);
+    console.log(file.mimetype);
+
     cb(null, `${Date.now()}_${file.originalname}`);
-  },
-  fileFilter: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    console.log(ext);
-    if (file.mimetype === "video/mp4") {
-      return cb(res.status(400).send("사진만 들어갈게요~"), false);
-    }
-    cb(null, true);
   }
 });
 
-const upload = multer({ storage: storage }).single("file");
+const upload = multer({
+  storage: storage,
+  fileFilter(req, file, cb) {
+    const ext = path.extname(file.originalname);
+    var allowedMimes = ["image/jpeg", "image/pjpeg", "image/png"];
+    console.log(ext);
+    if (allowedMimes.includes(file.mimetype)) {
+      return cb(null, true);
+    }
+    cb({ message: "파일 형식이 잘 못 되었습니다." }, false);
+  }
+}).single("file");
 
 postRoute.post("/uploadfiles", (req, res) => {
-  upload(req, res, err => {
-    console.log(res.file);
-    if (err) {
-      return res.json({ success: false, err });
+  upload(req, res, function(error) {
+    console.log(res.file, error);
+    if (error) {
+      return res.status(400).json({ success: false, error: error.message });
     }
     return res.json({
       success: true,
@@ -47,12 +51,13 @@ postRoute.post("/thumbnail", (req, res) => {
   let thumbsFilePath = "";
   let fileDuration = "";
 
-  ffmpeg.ffprobe(req.body.filePath, function(err, metadata) {
-    console.dir(metadata);
-    console.log(metadata.format);
+  // ffmpeg.ffprobe(req.body.filePath, function(err, metadata) {
+  //   console.dir(metadata);
+  //   console.log(metadata.format);
 
-    fileDuration = metadata.format.duration;
-  });
+  //   fileDuration = metadata.format.duration;
+  // });
+  console.log(req.body);
   ffmpeg(req.body.filePath)
     .on("filenames", function(filenames) {
       console.log(`Will generate ${filenames.join(", ")}`);
@@ -65,6 +70,9 @@ postRoute.post("/thumbnail", (req, res) => {
         thumbsFilePath: thumbsFilePath,
         fileDuration: fileDuration
       });
+    })
+    .on("error", function(err) {
+      console.error(err);
     })
     .screenshots({
       // Will take screens at 20%, 40%, 60% and 80% of the video

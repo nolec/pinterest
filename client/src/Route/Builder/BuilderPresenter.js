@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Dropzone from "react-dropzone";
+import Alert from "../../Components/layouts/Alert";
 import { Redirect } from "react-router-dom";
 const Main = styled.main``;
 
@@ -155,6 +156,7 @@ const BuilderPresenter = ({
                     onChange={handleChange}
                   />
                 </Group>
+                <Alert />
               </Right>
             </BuilderBox>
           </Wrapper>

@@ -32,7 +32,14 @@ export const createPost = (formData, history) => async dispatch => {
     });
     history.push("/");
   } catch (error) {
-    console.log(error);
+    const errors = error.response.data.msg;
+    console.log(errors);
+    errors.forEach(error => {
+      dispatch(setAlert(error.msg, "danger"));
+    });
+    dispatch({
+      type: POST_FAIL
+    });
   }
 };
 export const uploadFiles = files => async dispatch => {
@@ -42,6 +49,9 @@ export const uploadFiles = files => async dispatch => {
   };
   uploadData.append("file", files[0]);
   console.log(uploadData, files);
+  if (files[0].type === "image/png") {
+    alert("이미지네?");
+  }
 
   try {
     let variable = {
@@ -70,8 +80,12 @@ export const uploadFiles = files => async dispatch => {
       payload: res2.data
     });
   } catch (error) {
-    const errors = error.response.data.msg;
+    const errors = error.response.data;
     console.log(errors);
+    dispatch(setAlert(errors.error, "danger"));
+    dispatch({
+      type: POST_FAIL
+    });
   }
 };
 export const detailPost = (id, history) => async dispatch => {

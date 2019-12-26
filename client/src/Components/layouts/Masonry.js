@@ -63,7 +63,7 @@ const Masonry = () => {
           post.posts.map(post => (
             <div key={post._id} className="grid-item">
               <Tlink to={`/post/${post._id}`}>
-                <img src={`http://localhost:5000/${post.filePath}`} />
+                <img src={`http://localhost:5000/${post.thumbnail}`} />
                 <span>{post.title}</span>
               </Tlink>
             </div>
